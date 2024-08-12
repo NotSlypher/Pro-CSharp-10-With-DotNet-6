@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace ProductPortal.AccessData
 {
-    public class ProductDataAccess : IProductDataAcess 
+    public class ProductDataAccess : IProductDataAcess
     {
         private readonly ApplicationDbContext _db;
         public ProductDataAccess(ApplicationDbContext db)
         {
             _db = db;
         }
-        
+
         public void DeleteAll()
         {
             if (_db.Products.Count() > 0)
@@ -27,14 +27,15 @@ namespace ProductPortal.AccessData
                 _db.Products.RemoveRange(_db.Products);
                 _db.SaveChanges();
             }
-            else {
+            else
+            {
                 throw new NoProductsException();
             }
         }
 
         public void DeleteProduct(int id)
         {
-            Product? product = _db.Products.FirstOrDefault(p => p.Id ==id);
+            Product? product = _db.Products.FirstOrDefault(p => p.Id == id);
             if (product == null)
             {
                 throw new InvalidProductIdException();
@@ -45,18 +46,22 @@ namespace ProductPortal.AccessData
                     $"\n\n\t\t\t Product Deleted at id {id}\n\n" +
                     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-                _db.Products.Remove(_db.Products.FirstOrDefault(p => p.Id == id));
+                _db.Products.Remove((from p in _db.Products
+                                     where p.Id == id
+                                     select p).ToList()[0]);
                 _db.SaveChanges();
             }
         }
 
         public void ShowAllProducts()
         {
-            if(_db.Products.Count() <= 0)
+            if (_db.Products.Count() <= 0)
             {
                 throw new NoProductsException();
             }
-            var products = _db.Products.ToList();
+            var products = (from p in _db.Products
+                            select p).ToList();
+
             foreach (var product in products)
             {
                 Console.WriteLine($"\n~~~~~~~~~~~~~~~~Product of id: {product.Id}~~~~~~~~~~~~~~~");
@@ -66,13 +71,14 @@ namespace ProductPortal.AccessData
 
         public void ShowProductById(int id)
         {
-            Product? product = _db.Products.FirstOrDefault(p => p.Id == id);
+            Product? product = (from p in _db.Products
+                                where p.Id == id
+                                select p).ToList()[0];
 
             if (product == null)
             {
                 throw new InvalidProductIdException();
             }
-            Product product = _db.Products.FirstOrDefault(p => p.Id ==id);
             Console.WriteLine($"~~~~~~~~~~~~~~~~Product of id: {id}~~~~~~~~~~~~~~~");
             Console.WriteLine(product);
         }
@@ -82,8 +88,10 @@ namespace ProductPortal.AccessData
             Console.WriteLine("~~~~~~~~~~~~~Enter Category to view Products by category~~~~~~~~~~~~");
             Console.Write("Category: ");
             string category = Console.ReadLine();
-            List<Product>? products = _db.Products.Where(x => x.Category == category).ToList();
-            
+            List<Product>? products = (from p in _db.Products
+                                       where p.Category== category
+                                       select p).ToList();
+
             if (products == null)
             {
                 Console.WriteLine("XXXXXXXXXXXXXXX No Category found XXXXXXXXXXXXXX");
@@ -108,7 +116,9 @@ namespace ProductPortal.AccessData
             }
             else
             {
-                product = _db.Products.FirstOrDefault(p => p.Id == id);
+                product = (from p in _db.Products
+                           where p.Id == id
+                           select p).ToList()[0];
                 if (product == null)
                 {
                     throw new InvalidProductIdException();
@@ -129,11 +139,12 @@ namespace ProductPortal.AccessData
             Console.Write("Enter product price: ");
             product.Price = Convert.ToInt32(Console.ReadLine());
 
-            if(id == null){
+            if (id == null)
+            {
                 Console.WriteLine("\n\n\t\tProduct Created successfully");
                 _db.Products.Add(product);
             }
-            else 
+            else
                 Console.WriteLine($"\n\n\t\tProduct {id} Updated successfully");
             _db.SaveChanges();
         }

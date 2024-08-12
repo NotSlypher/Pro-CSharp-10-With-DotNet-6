@@ -47,7 +47,7 @@ namespace ProductPortal
                 );
             */
 
-            var DbConnection = "Data Source=localhost;Initial Catalog=NiceTrainingDB;Integrated Security=True;Trust Server Certificate=True";
+            var DbConnection = Environment.GetEnvironmentVariable("ProductConnectionString", EnvironmentVariableTarget.User);
             var dbContextOptions = new DbContextOptionsBuilder<ApplicationDbContext>();
             dbContextOptions.UseSqlServer(DbConnection);
 
