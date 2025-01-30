@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleCSharpConsoleApp
+namespace _4_ConstData
 {
-    internal class Car
+    public class MyMathClass
     {
-        public int id { get; set; } 
-        public string name { get; set; }
+        public const double PI = 3.14159;
     }
 }
