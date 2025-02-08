@@ -1,5 +1,8 @@
 # Interfaces
 
+- An interface is a reference type in C# that is similar to a class, but it is a completely abstract class that contains only abstract members.
+- An interface does not specify any base class, not even `System.Object`, so an interface cannot have any constructors, but it can have base interfaces.
+
 ## Interfaces vs Abstract Base Classes
 
 - Abstract classes are used when you want to provide a common base class implementation for all derived classes, but you do not want to allow the instantiation of the base class itself, abstract classes can define the following
@@ -15,3 +18,137 @@
 	- Indexers
 	- Interfaces cannot define field data, constructors, or destructors
 	- static constructor
+- ex.
+```csharp
+static void ClonableExample()
+{
+    string mystr = "hello";
+    OperatingSystem unixOs = new OperatingSystem(PlatformID.Unix, new Version());
+
+    //Therefore they can all be passed into a method taking ICloneable
+    CloneMe(mystr);
+    CloneMe(unixOs);
+
+    static void CloneMe(ICloneable c)
+    {
+        //Clone whatever we wnat and print the same
+        object theClone = c.Clone();
+        Console.WriteLine("Your lcone is a: {0}", theClone.GetType().Name);
+    }
+}
+```
+- In the above example, the `CloneMe` method takes an `ICloneable` interface as a parameter, and both `string` and `OperatingSystem` classes implement the `ICloneable` interface, so they can be passed into the `CloneMe` method.
+
+### Problems with abstract base classes
+
+1. A class can inherit from only one abstract base class
+	- If a class needs to inherit from multiple abstract base classes, it is not possible
+	- ex. if a class wants to inherit from the `ClonableType` abstract class to have clonable property class it cannot because it is already inheriting from another abstract class `Shape`.
+
+2.  each derived type must contend with the set of abstract members and provide an implementation
+	- If a class inherits from an abstract class, it must provide an implementation for all the abstract members of the base class
+	- ex. 
+	```csharp
+		abstract class Shape
+		{
+			public abstract byte SidesCount();
+		}
+	```
+	- Lets say we have a abstract class `Shape` where a new method `SidesCount` is added, now all the derived classes must provide an implementation for the `SidesCount` method, and we have derived classes `Circle` and `Rectangle` which do not have sides, so we have to provide a dummy implementation for the `SidesCount` method in the derived classes like `Circle` which is not a good practice.
+	- This is where interfaces come into play, we can define an interface `IHasSides` which has the `SidesCount` method and only the `rectangle` class can implement the `IHasSides` interface and provide an implementation for the `SidesCount` method.
+
+## Checking if an object implements an interface
+
+### Using explicit casting
+
+- We can use explicit casting to check if an object implements an interface
+- if it doesnt not implement the interface, it will throw an exception which can be gracefully caught using try - catch block.
+- ex.
+```csharp
+static void CheckIfObjectImplementsInterface()
+{
+	//Create a new object
+	object myObj = new object();
+
+	//Catch possible InvalidCastException
+	try
+	{
+		//Explicitly cast the object to the interface
+		ICloneable cloneable = (ICloneable)myObj;
+	}
+	catch (InvalidCastException ex)
+	{
+		Console.WriteLine("The object does not implement the ICloneable interface");
+	}
+}
+```
+- In the above example, we are trying to cast an object to the `ICloneable` interface, if the object does not implement the `ICloneable` interface, an `InvalidCastException` will be thrown, which can be caught using a `try-catch` block.
+- This method is not recommended because it is not type-safe and can throw an exception at runtime.
+
+### Using the `as` keyword
+
+- We can use the `as` keyword to check if an object implements an interface
+- The `as` keyword returns `null` if the object does not implement the interface
+- ex.
+```csharp
+static void CheckIfObjectImplementsInterface()
+{
+	//Create a new object
+	object myObj = new object();
+
+	//Check if the object implements the ICloneable interface
+	ICloneable cloneable = myObj as ICloneable;
+
+	//If the object does not implement the ICloneable interface, the cloneable variable will be null
+	if (cloneable == null)
+	{
+		Console.WriteLine("The object does not implement the ICloneable interface");
+	}
+}
+```
+- In the above example, we are using the `as` keyword to check if an object implements the `ICloneable` interface, if the object does not implement the `ICloneable` interface, the `cloneable` variable will be `null`.
+- This method is recommended because it is type-safe and does not throw an exception at runtime.
+
+### Using the `is` keyword
+
+- We can use the `is` keyword to check if an object implements an interface
+- The `is` keyword returns `true` if the object implements the interface, otherwise it returns `false`
+- if you supply a variable name in the `is` keyword, it will also assign the value to the variable.
+- ex.
+```csharp
+static void CheckIfObjectImplementsInterface()
+{
+	//Create a new object
+	object myObj = new object();
+
+	//Check if the object implements the ICloneable interface
+	if (myObj is ICloneable cloneable)
+	{
+		Console.WriteLine("The object implements the ICloneable interface");
+	}
+	else
+	{
+		Console.WriteLine("The object does not implement the ICloneable interface");
+	}
+}
+```
+- In the above example, we are using the `is` keyword to check if an object implements the `ICloneable` interface, if the object implements the `ICloneable` interface, `myObj` will be assigned to the `cloneable` variable, otherwise, the `myObj` will not be assigned to the `cloneable` variable.
+- This method is recommended because it is type-safe and does not throw an exception at runtime.
+
+## Default implementations
+
+- In C# 8.0, interfaces can have default implementations for methods, properties, and indexers
+- Default implementations allow you to provide a default implementation for a method, property, or indexer in an interface
+- ex.
+```csharp
+interface IRegularPointy
+{
+int Perimeter => 0;
+}
+
+class Square : IRegularPointy
+{
+// The Square class does not need to provide an implementation for the Perimeter property
+}
+```
+- One problem with default implementations is that if not defined in the `Square` class, and the reference used while creating the object is of `Square` class, the method wont be accessible as it is not defined in the `Square` class. If the reference is of the interface type, then the default implementation will be used.

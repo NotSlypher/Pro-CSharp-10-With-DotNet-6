@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35125.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCSharpApp", "SimpleCSharpApp\SimpleCSharpApp.csproj", "{4B3CEEBD-981C-4E46-A06A-89F2F3128EB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_2_SimpleCSharpApp", "SimpleCSharpApp\1_2_SimpleCSharpApp.csproj", "{4B3CEEBD-981C-4E46-A06A-89F2F3128EB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicConsoleIO", "BasicConsoleIO\BasicConsoleIO.csproj", "{B5A9DD1B-05D5-4769-BC07-8170A7FF0020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_1_BasicConsoleIO", "BasicConsoleIO\1_1_BasicConsoleIO.csproj", "{B5A9DD1B-05D5-4769-BC07-8170A7FF0020}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core C# Programming", "Core C# Programming", "{334A2EE7-1A89-4D1C-9823-78C2DD63FA29}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_Core C# Programming", "1_Core C# Programming", "{334A2EE7-1A89-4D1C-9823-78C2DD63FA29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Array_Tuple", "Array_Tuple\Array_Tuple.csproj", "{C6512017-B890-45E6-AB91-95B6CA1BAE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_3_Array_Tuple", "Array_Tuple\1_3_Array_Tuple.csproj", "{C6512017-B890-45E6-AB91-95B6CA1BAE1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Notes", "_Notes", "{6C8B12A3-5F85-4E01-8B1A-63D36CD14D02}"
 EndProject
@@ -24,13 +24,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_OOP", "2_OOP", "{689471DC
 	ProjectSection(SolutionItems) = preProject
 		AutoProps.md = AutoProps.md
 		Encapsulation.md = Encapsulation.md
+		Exception-Handling.md = Exception-Handling.md
 		Inheritance.md = Inheritance.md
 		OOP.md = OOP.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_SimpleClassExample", "SimpleClassExample\1_SimpleClassExample.csproj", "{4FAEBA04-E4F3-42BD-8F60-F5E4DFEA5830}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OOP", "OOP", "{4ECB451E-E8B7-428E-BCD8-C8D244AA214C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_OOP", "2_OOP", "{4ECB451E-E8B7-428E-BCD8-C8D244AA214C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_Encapsulation", "1_Encapsulation", "{C2749062-A68A-400E-AC71-62A87112E22F}"
 EndProject
@@ -53,6 +54,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3_Exception Handling", "3_Exception Handling", "{841E44CC-AB41-4724-951C-9AF752334E53}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_SimpleException", "SimpleException\1_SimpleException.csproj", "{2E7110E5-3882-4C2C-BADE-D3538F976158}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4_Interfaces", "4_Interfaces", "{4175976B-AC00-44B1-B680-A36908D9CAB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_CustomInterfaces", "1_CustomInterfaces\1_CustomInterfaces.csproj", "{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +113,10 @@ Global
 		{2E7110E5-3882-4C2C-BADE-D3538F976158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E7110E5-3882-4C2C-BADE-D3538F976158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E7110E5-3882-4C2C-BADE-D3538F976158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +139,8 @@ Global
 		{818838EA-72D1-4248-8EF9-2633A8D0DA8B} = {815FA00F-2A5D-4C5C-9B31-CC3BA077FE73}
 		{841E44CC-AB41-4724-951C-9AF752334E53} = {4ECB451E-E8B7-428E-BCD8-C8D244AA214C}
 		{2E7110E5-3882-4C2C-BADE-D3538F976158} = {841E44CC-AB41-4724-951C-9AF752334E53}
+		{4175976B-AC00-44B1-B680-A36908D9CAB3} = {4ECB451E-E8B7-428E-BCD8-C8D244AA214C}
+		{709D2A9F-97B6-4BCB-B6FB-BBC3C3942258} = {4175976B-AC00-44B1-B680-A36908D9CAB3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {716778AD-4347-4531-92E7-E423438FE988}
