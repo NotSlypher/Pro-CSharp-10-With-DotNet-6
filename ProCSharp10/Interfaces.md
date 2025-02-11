@@ -177,3 +177,84 @@ void IDrawToPrinter.Draw()
 ```
 - Note we cannot use access modifier here as it is not allowed in explicit interface implementation, because explicitly implemented interface members are implicitly private. That is they are no longer accesible from the object level.
 - You must use explicit interface implementation or explicit casing to access the members of the interface.
+
+## Custom Enumerator
+
+- This is a custom enumerator that can be used to iterate over a collection of items, like we do in case of built in enumerators like array, list etc using foreach loop.
+- This custom enumerator is implemented using the IEnumerable and IEnumerator interfaces.
+- The class that we need to be iterated over must implement the IEnumerable interface. This interface has a method GetEnumerator() which returns an object of IEnumerator interface.
+- 
+```charp
+public interface IEnumerable
+{
+	IEnumerator GetEnumerator();
+}
+```
+
+- The IEnumerator interface has three properties: Current, MoveNext and Reset.
+```charp
+public interface IEnumerator
+{
+	object Current { get; }
+	bool MoveNext();
+	void Reset();
+}
+```
+
+- The class that implements the IEnumerable interface must have a method GetEnumerator() which returns an object of IEnumerator interface. This can either be done using a class that already implements the IEnumerator interface like array or by implementing the IEnumerator interface in the class itself.
+```charp
+    public class Garage: IEnumerable
+    {
+        private Car[] carArray = new Car[4];
+        public Garage()
+        {
+            carArray[0] = new Car("Rusty", 30);
+            carArray[1] = new Car("Clunker", 55);
+            carArray[2] = new Car("Zippy", 30);
+            carArray[3] = new Car("Fred", 30);
+        }
+
+        public IEnumerator GetEnumerator() => carArray.GetEnumerator();
+    }
+```
+
+- The GetEnumerator() method of the Garage class returns an object of the IEnumerator interface. The GetEnumerator() method of the array class returns an object of the IEnumerator interface. So, the Garage class can return the object of the IEnumerator interface returned by the array class.
+- The foreach loop can be used to iterate over the collection of items in the Garage class.
+```charp
+	Garage garage = new Garage();
+	foreach (Car car in garage)
+	{
+		Console.WriteLine($"{car.PetName} is going {car.CurrentSpeed} MPH");
+	}
+```
+
+### yield return
+
+- The `yield` keyword is used to specify the value(values) to be reuturned to the caller's foreach loop.
+- Whwn the yield return statement is executed, the current location in the code is remembered, and the execution is restarted from this location the next time the iterator is called.
+- The `yield` keyword is used to return the value to the caller and the `return` keyword is used to return the value to the caller and exit the method.
+
+#### Guard clause
+
+- None of the code in GetEnumerator() is executed until the first time that the items are iterated over (or any element is accessed). That means if there is an exception prior to the `yield` statement, it will nbot get thrown when the method is first called, but only when the first `MoveNext()` is called.
+- Suppose the enumerator list is gathered from a database. You might want to check that the database connection can be opened at the time the method is called, not when the list is itereated over.
+
+```charp
+public IEnumerator GetEnumerator()
+        {
+            throw new Exception("This won't get called");
+            return actualImplementation();
+
+            IEnumerator actualImplementation()
+            {
+                yield return carArray[0];
+                yield return carArray[1];
+                yield return carArray[2];
+                yield return carArray[3];
+            }
+        }
+```
+
+### Named Iterators
+
+- The `yield` keyword can be can be used with any method that returns an `IEnumerable` or `IEnumerable<T>`, regardless of its name.
