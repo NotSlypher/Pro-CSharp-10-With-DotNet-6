@@ -8,6 +8,6 @@ namespace _1_CustomInterfaces
 {
     public class Fork : IPointy
     {
-        public byte Pointss => 4;
+        public byte Points => 4;
     }
 }

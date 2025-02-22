@@ -13,6 +13,11 @@ foreach (Point p in myPointList)
     Console.WriteLine(p);
 }
 
+Point myPoint = myPointList.First<Point>(p => p.X == 1);
+
+//Indexing does not work with non generic collections without creating a custom indexer
+//int myInt = myArrayList[0];
+
 UseGenericsList();
 
 static void UseGenericsList()
@@ -46,17 +51,17 @@ static void UseGenericStack()
     stack.Push(new Person { FirstName = "dam", Age = 23, LastName = "ds" });
     stack.Push(new Person { FirstName = "eam", Age = 23, LastName = "ds" });
 
-    Console.WriteLine("First person in the stack is {0}", stack.Peek();
+    Console.WriteLine("First person in the stack is {0}", stack.Peek());
     Console.WriteLine("Popped off {0}", stack.Pop());
-    Console.WriteLine("First person in the stack is {0}", stack.Peek();
+    Console.WriteLine("First person in the stack is {0}", stack.Peek());
     Console.WriteLine("Popped off {0}", stack.Pop());
-    Console.WriteLine("First person in the stack is {0}", stack.Peek();
+    Console.WriteLine("First person in the stack is {0}", stack.Peek());
     Console.WriteLine("Popped off {0}", stack.Pop());
 }
 
 static void UseGenericSortedSet()
 {
-    SortedSet<Person> setOfPeople = new SortedSet<Person>(new SortPeopleByAge)
+    SortedSet<Person> setOfPeople = new SortedSet<Person>(new SortPeopleByAge())
     {
         new Person { FirstName = "dam", Age = 23, LastName = "ds" },
         new Person { FirstName = "eam", Age = 23, LastName = "ds" },
